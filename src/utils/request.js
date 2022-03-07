@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
-import { getToken, setSeconds, setToken, getSeconds } from '@/utils/auth'
+import { getToken, setToken } from '@/utils/auth'
 
 axios.defaults.withCredentials = true
 // create an axios instance
@@ -46,7 +46,7 @@ service.interceptors.response.use(
     const token = response.headers.authorization
 
     if (token) {
-      setToken(token,1800)
+      setToken(token, 1800)
     }
     if (response.status === 200 && !res.error && res.error !== 0) {
       return response

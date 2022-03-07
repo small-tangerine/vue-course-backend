@@ -25,8 +25,8 @@
       <el-button type="primary" size="mini" @click="submit">{{ $t('profile.save') }}</el-button>
       <el-button type="danger" size="mini" @click="close">{{ $t('profile.close') }}</el-button>
     </el-form-item>
-    <update-email ref="email" :email="user.email" :username="user.userName" :user-id="user.id" @update-link="changeNew" />
-    <update-phone ref="phone" :phone="user.mobile" :username="user.userName" :user-id="user.id" @update-link="changeNew" />
+    <update-email ref="email" :email="user.email" @update-link="changeNew" />
+    <update-phone ref="phone" :phone="user.mobile" @update-link="changeNew" />
   </el-form>
 
 </template>
@@ -34,7 +34,7 @@
 <script>
 import UpdateEmail from '@/views/profile/components/updateEmail'
 import UpdatePhone from '@/views/profile/components/updatePhone'
-
+import { updateBaseInfo } from '@/api/user'
 export default {
   components: { UpdatePhone, UpdateEmail },
   props: {
@@ -49,22 +49,6 @@ export default {
       rules: {
         nickname: [
           { required: true, message: '用户昵称不能为空', trigger: 'blur' }
-        ],
-        email: [
-          { required: true, message: '邮箱地址不能为空', trigger: 'blur' },
-          {
-            type: 'email',
-            message: "'请输入正确的邮箱地址",
-            trigger: ['blur', 'change']
-          }
-        ],
-        mobile: [
-          { required: true, message: '手机号码不能为空', trigger: 'blur' },
-          {
-            pattern: '^1([358][0-9]|4[579]|66|7[0135678]|9[89])[0-9]{8}$',
-            message: '请输入正确的手机号码',
-            trigger: 'blur'
-          }
         ]
       }
     }
@@ -73,7 +57,11 @@ export default {
     submit() {
       this.$refs['form'].validate(valid => {
         if (valid) {
-          return true
+          updateBaseInfo({sex:this.user.sex,nickname: this.user.nickname}).then(res =>{
+            if (res.error === 0){
+              this.$message.success(res.msg)
+            }
+          })
         }
       })
     },
@@ -81,8 +69,8 @@ export default {
       this.$store.dispatch('tagsView/delView', this.$route)
       this.$router.push({ path: '/dashboard' })
     },
-    changeNew(type, link) {
-      this.$emit('change-link', type, link)
+    changeNew(type, link,isUpdateUsername) {
+      this.$emit('change-link', type, link,isUpdateUsername)
     }
   }
 }

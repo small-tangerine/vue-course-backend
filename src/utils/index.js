@@ -355,3 +355,6 @@ export function removeClass(ele, cls) {
     ele.className = ele.className.replace(reg, ' ')
   }
 }
+export function subUrlFileName (url){
+  return  url.substring(url.lastIndexOf("/") + 1);
+}

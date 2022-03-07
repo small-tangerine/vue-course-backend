@@ -16,6 +16,35 @@ export function resetPassword(data) {
   })
 }
 
+export function updateBaseInfo(data) {
+  return request({
+    url: '/user/update-base-info',
+    method: 'post',
+    data
+  })
+}
+export function updateTeacherInfo(data) {
+  return request({
+    url: '/user/update-teacher-info',
+    method: 'post',
+    data
+  })
+}
+export function updatePhone(data) {
+  return request({
+    url: '/user/update-phone',
+    method: 'post',
+    data
+  })
+}
+export function updateEmail(data) {
+  return request({
+    url: '/user/update-email',
+    method: 'post',
+    data
+  })
+}
+
 // 用户登录信息
 export function getInfo() {
   return request({
@@ -34,5 +63,14 @@ export function logout() {
   return request({
     url: '/account/logout',
     method: 'post'
+  })
+}
+
+export function uploadAvatar(data)
+{
+  return request({
+    url: '/avatar/upload',
+    method: 'post',
+    data
   })
 }

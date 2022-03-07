@@ -223,7 +223,7 @@ export default {
     baseInfo: '基本信息',
     phone: '手机号码',
     email: '用户邮箱',
-    account: '用户名称',
+    account: '用户账号',
     nickName: '用户昵称',
     sex: '用户性别',
     role: '所属角色',

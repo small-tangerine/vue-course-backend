@@ -24,7 +24,7 @@ module.exports = {
    * In most cases please use '/' !!!
    * Detail: https://cli.vuejs.org/config/#publicpath
    */
-  publicPath: '/',
+  publicPath: '/manager',
   outputDir: 'dist',
   assetsDir: 'static',
   lintOnSave: process.env.NODE_ENV === 'development',
@@ -36,13 +36,14 @@ module.exports = {
       warnings: false,
       errors: true
     },
+    publicPath: '/manager',
     proxy: {
-      '/dev-api': { // 将www.exaple.com印射为/apis
+      '/api/v3': { // 将www.exaple.com印射为/apis
         target: process.env.VUE_APP_BASE_URL, // 接口域名
         secure: false, // 如果是https接口，需要配置这个参数
         changeOrigin: true, // 是否跨域
         pathRewrite: {
-          '^/dev-api': '' // 需要rewrite的,
+          '^/api/v3': '' // 需要rewrite的,
         }
       }
     }

@@ -54,6 +54,9 @@
             <el-tab-pane :label="$t('profile.changePassword')" name="resetPwd">
               <resetPwd :user="userInfo" />
             </el-tab-pane>
+            <el-tab-pane v-if="userInfo.roleId === 3" label="讲师信息" name="teacher">
+              <resetPwd :user="userInfo" />
+            </el-tab-pane>
           </el-tabs>
         </el-card>
       </el-col>
@@ -65,7 +68,7 @@
 import userAvatar from './userAvatar'
 import userInfo from './userInfo'
 import resetPwd from './resetPwd'
-import {mapGetters} from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Profile',
@@ -77,16 +80,19 @@ export default {
       activeTab: 'userinfo'
     }
   },
- computed:{
-   ...mapGetters(['userInfo'])
- },
+  computed: {
+    ...mapGetters(['userInfo'])
+  },
   methods: {
-    changeLink(type, link) {
+    changeLink(type, link,isUpdateUsername) {
       if (type === 'email') {
-        this.user.email = link
+        this.userInfo.email = link
       }
       if (type === 'phone') {
-        this.user.phone = link
+        this.userInfo.mobile = link
+      }
+      if (isUpdateUsername){
+        this.userInfo.username =link
       }
     }
   }

@@ -34,10 +34,14 @@
           tabindex="1"
           auto-complete="off"
         />
-        <span :disabled="isDisabled" @click="sendCode" :style="{cursor: isDisabled ? '':`pointer`,
-        'pointer-events': isDisabled ? 'none':'auto',
-        'color': isDisabled ? '#C0C4CC': '#fff'
-      }">{{ buttonText }}</span>
+        <span
+          :disabled="isDisabled"
+          :style="{cursor: isDisabled ? '':`pointer`,
+                   'pointer-events': isDisabled ? 'none':'auto',
+                   'color': isDisabled ? '#C0C4CC': '#fff'
+          }"
+          @click="sendCode"
+        >{{ buttonText }}</span>
       </el-form-item>
 
       <el-form-item prop="password">
@@ -83,8 +87,8 @@
       <el-button v-if="isReset" :loading="loading" type="primary" style="width:100%;margin-bottom:20px;" @click.native.prevent="handleResetPassword">重置密码</el-button>
       <el-button v-else :loading="loading" type="primary" style="width:100%;margin-bottom:20px;" @click.native.prevent="handleLogin">{{ $t('login.logIn') }}</el-button>
       <div class="tips">
-        <span v-if="isReset" @click="isReset= false">返回登录</span>
-        <span v-else @click="resetPassword">忘记密码</span>
+        <span v-if="isReset" @click="resetPassword(false)">返回登录</span>
+        <span v-else @click="resetPassword(true)">忘记密码</span>
       </div>
 
     </el-form>
@@ -92,7 +96,7 @@
 </template>
 
 <script>
-import {resetPassword} from "@/api/user";
+import { resetPassword } from '@/api/user'
 export default {
   name: 'Login',
   data() {
@@ -113,7 +117,7 @@ export default {
     const validateCheckPassword = (rule, value, callback) => {
       if (!value || value.trim().length === 0) {
         callback(new Error('请再次输入密码'))
-      } else if (value !== this.loginForm.password){
+      } else if (value !== this.loginForm.password) {
         callback(new Error('两次密码不一致'))
       } else {
         callback()
@@ -124,21 +128,21 @@ export default {
       flag: true,
       buttonText: '发送验证码',
       loginForm: {
-        username: 'admin',
-        password: 'a1234567',
+        username: '13630497916',
+        password: 'String@1234',
         checkPassword: undefined,
-        verifyCode:undefined
+        verifyCode: undefined
       },
       isReset: false,
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
         password: [{ required: true, trigger: 'blur', validator: validatePassword }],
-        verifyCode: [{ required: true, trigger: 'blur', message:'请输入验证码' }],
+        verifyCode: [{ required: true, trigger: 'blur', message: '请输入验证码' }],
         checkPassword: [{ required: true, trigger: 'blur', validator: validateCheckPassword }]
       },
       loading: false,
       passwordType: 'password',
-      redirect: undefined,
+      redirect: undefined
     }
   },
   watch: {
@@ -151,30 +155,31 @@ export default {
   },
   methods: {
     // <!--发送验证码-->
-    sendCode () {
+    sendCode() {
       this.$refs['loginForm'].validateField('username', valid => {
         if (!valid) {
           let time = 60
           this.buttonText = '重新发送 ' + time
           this.isDisabled = true
           if (this.flag) {
-            this.flag = false;
-            let timer = setInterval(() => {
-              time--;
+            this.flag = false
+            const timer = setInterval(() => {
+              time--
               this.buttonText = '重新发送 ' + time
               if (time === 0) {
-                clearInterval(timer);
+                clearInterval(timer)
                 this.buttonText = '重新发送'
                 this.isDisabled = false
-                this.flag = true;
+                this.flag = true
               }
             }, 1000)
           }
         }
       })
     },
-    resetPassword(){
-      this.isReset =true
+    resetPassword(tag) {
+      this.isReset = tag
+      this.$refs.loginForm.resetFields()
     },
     showPwd() {
       if (this.passwordType === 'password') {
@@ -186,13 +191,13 @@ export default {
         this.$refs.password.focus()
       })
     },
-    handleResetPassword(){
+    handleResetPassword() {
       this.$refs['loginForm'].validate(valid => {
         if (valid) {
           this.loading = true
-        resetPassword(this.loginForm).then((res) => {
+          resetPassword(this.loginForm).then((res) => {
             if (res.error === 0) {
-              this.$router.push({path: '/login'})
+              this.$router.push({ path: '/login' })
               this.$message.success(res.msg)
             }
             this.loading = false
@@ -204,7 +209,7 @@ export default {
       })
     },
     handleLogin() {
-      this.loginForm.checkPassword= undefined
+      this.loginForm.checkPassword = undefined
       this.loginForm.verifyCode = undefined
       this.$refs.loginForm.validate(valid => {
         if (valid) {

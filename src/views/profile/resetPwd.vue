@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import { updateUserPassword } from '@/api/profile'
 export default {
   data() {
     const equalToPassword = (rule, value, callback) => {
@@ -38,12 +39,7 @@ export default {
           { required: true, message: '旧密码不能为空', trigger: 'blur' }
         ],
         newPassword: [
-          { required: true, message: '新密码不能为空', trigger: 'blur' },
-          {
-            pattern: '^(?![A-Z]+$)(?![a-z]+$)(?!\\d+$)(?![\\W_]+$)\\S{6,15}$',
-            message: '请输入包含数字、字母或特殊字符的6至15位以上密码',
-            trigger: 'blur'
-          }
+          { required: true, message: '新密码不能为空', trigger: 'blur' }
         ],
         confirmPassword: [
           { required: true, message: '确认密码不能为空', trigger: 'blur' },
@@ -56,7 +52,17 @@ export default {
     submit() {
       this.$refs['form'].validate(valid => {
         if (valid) {
-          return true
+          if (valid) {
+            updateUserPassword({password:this.user.newPassword,oldPassword:this.user.oldPassword,
+            checkPassword:this.user.confirmPassword}).then(
+              res => {
+              if (res.error === 0){
+                this.$message.success(res.msg)
+                this.$refs.form.resetFields()
+              }
+              }
+            )
+          }
         }
       })
     },

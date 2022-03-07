@@ -14,7 +14,7 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button :loading="loading" type="primary" @click="doSubmit">确认</el-button>
+        <el-button :loading="loading" type="primary" @click="doSubmit">提交</el-button>
         <el-button type="text" @click="cancel">取消</el-button>
       </div>
     </el-dialog>
@@ -22,6 +22,8 @@
 </template>
 
 <script>
+import { updateEmail } from '@/api/user'
+
 export default {
   name: 'UpdateEmail',
   props: {
@@ -29,26 +31,14 @@ export default {
       type: String,
       required: true,
       default: ''
-    },
-    username: {
-      type: String,
-      required: true,
-      default: ''
-    },
-    userId: {
-      type: Number,
-      required: true,
-      default: 0
     }
   },
   data() {
     const validMail = (rule, value, callback) => {
       if (value === '' || value === null) {
         callback(new Error('新邮箱不能为空'))
-      } else if (value === this.email) {
-        callback(new Error('新邮箱不能与旧邮箱相同'))
       } else {
-        callback(new Error('邮箱格式错误'))
+        callback()
       }
     }
     return {
@@ -74,10 +64,42 @@ export default {
       this.resetForm()
     },
     sendCode() {
+      this.$refs.form.validateField('email', validate => {
+        if (!validate) {
+          this.codeLoading = true
+          this.buttonName = '验证码发送中'
+          const _this = this
+          this.codeLoading = false
+          this.isDisabled = true
+          this.buttonName = this.time-- + '秒后重新发送'
+          this.timer = window.setInterval(function() {
+            _this.buttonName = _this.time + '秒后重新发送'
+            --_this.time
+            if (_this.time < 0) {
+              _this.buttonName = '重新发送'
+              _this.time = 60
+              _this.isDisabled = false
+              window.clearInterval(_this.timer)
+            }
+          }, 1000)
+        } else {
+          return false
+        }
+      })
     },
     doSubmit() {
       this.$refs['form'].validate(valid => {
-        return !!valid
+        if (valid) {
+          updateEmail({ email: this.form.email, verifyCode: this.form.code, password: this.form.userPassword }).then(res => {
+            if (res.error === 0) {
+              const { data } =res
+              this.$message.success(res.msg)
+              this.$emit('update-link', 'email', this.form.email,data.isUpdateUsername || false)
+              this.resetForm()
+              this.codeLoading = false
+            }
+          })
+        }
       })
     },
     resetForm() {

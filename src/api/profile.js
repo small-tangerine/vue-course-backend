@@ -1,13 +1,9 @@
 import request from '@/utils/request'
 
 // 用户密码重置
-export function updateUserPassword(oldPassword, newPassword) {
-  const data = {
-    oldPassword,
-    newPassword
-  }
+export function updateUserPassword(data) {
   return request({
-    url: '/account/update-password',
+    url: '/user/update-password',
     method: 'post',
     data: data
   })

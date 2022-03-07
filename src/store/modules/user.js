@@ -1,4 +1,4 @@
-import { getToken, setToken, removeToken} from '@/utils/auth'
+import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
 import { login, logout, getInfo } from '@/api/user'
 
@@ -31,9 +31,9 @@ const mutations = {
   SET_FIRST: (state, isFirst) => {
     state.isFirst = isFirst === 1
   },
-  SET_USER_INFO: (state,info) => {
+  SET_USER_INFO: (state, info) => {
     state.userInfo = info
-}
+  }
 }
 
 const actions = {
@@ -47,7 +47,7 @@ const actions = {
       }
       login({ username: username, password: password }).then(res => {
         const { data } = res || []
-        const { id, avatar, token} = data
+        const { id, avatar, token } = data
         commit('SET_TOKEN', token)
         commit('SET_FIRST', 0)
         commit('SET_AVATAR', avatar)
@@ -64,8 +64,8 @@ const actions = {
     return new Promise((resolve, reject) => {
       getInfo().then(response => {
         const { data } = response || []
-        const { id, nickname, avatar, roles} = data
-        commit('SET_USER_INFO',data)
+        const { id, nickname, avatar, roles } = data
+        commit('SET_USER_INFO', data)
         commit('SET_ROLES', roles || [])
         commit('SET_NAME', nickname)
         commit('SET_AVATAR', avatar)
