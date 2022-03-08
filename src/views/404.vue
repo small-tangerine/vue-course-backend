@@ -10,7 +10,7 @@
       <div class="bullshit">
         <div class="bullshit__oops">{{ $t('errorPage.oops') }}</div>
         <div class="bullshit__headline">{{ $t('errorPage.message') }}</div>
-        <a href="/" class="bullshit__return-home">{{ $t('errorPage.back2home') }}</a>
+        <a href="/manager/dashboard" class="bullshit__return-home">{{ $t('errorPage.back2home') }}</a>
       </div>
     </div>
   </div>
