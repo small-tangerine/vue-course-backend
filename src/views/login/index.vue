@@ -86,9 +86,12 @@
 
       <el-button v-if="isReset" :loading="loading" type="primary" style="width:100%;margin-bottom:20px;" @click.native.prevent="handleResetPassword">重置密码</el-button>
       <el-button v-else :loading="loading" type="primary" style="width:100%;margin-bottom:20px;" @click.native.prevent="handleLogin">{{ $t('login.logIn') }}</el-button>
-      <div class="tips">
-        <span v-if="isReset" @click="resetPassword(false)">返回登录</span>
-        <span v-else @click="resetPassword(true)">忘记密码</span>
+      <div style="position:relative">
+        <span class="platform-button" >
+          <svg-icon icon-class="guide" /> <a href="/">{{ $t('login.platform') }}</a>
+        </span>
+          <span style="margin-right: 10px;" v-if="isReset" @click="resetPassword(false)"  class="thirdparty-button">返回登录</span>
+          <span style="margin-right: 10px;" v-else @click="resetPassword(true)"  class="thirdparty-button">忘记密码</span>
       </div>
 
     </el-form>
@@ -281,6 +284,7 @@ $bg:#2d3a4b;
 $dark_gray:#889aa4;
 $light_gray:#eee;
 
+
 .login-container {
   min-height: 100%;
   width: 100%;
@@ -303,7 +307,6 @@ $light_gray:#eee;
 
   .tips {
     font-size: 14px;
-    float: right;
     color: #fff;
     margin-bottom: 10px;
 
@@ -311,7 +314,6 @@ $light_gray:#eee;
       &:first-of-type {
         margin-right: 16px;
       }
-      cursor: pointer;
     }
   }
 
@@ -333,6 +335,15 @@ $light_gray:#eee;
       text-align: center;
       font-weight: bold;
     }
+
+    .set-language {
+      color: #fff;
+      position: absolute;
+      top: 3px;
+      font-size: 18px;
+      right: 0;
+      cursor: pointer;
+    }
   }
 
   .show-pwd {
@@ -343,6 +354,25 @@ $light_gray:#eee;
     color: $dark_gray;
     cursor: pointer;
     user-select: none;
+  }
+
+  .thirdparty-button {
+    float: right;
+    top: 426px;
+    color: #889aa4;
+    cursor: pointer;
+  }
+  .thirdparty-button:hover{
+    color:#eee;
+  }
+  .platform-button {
+    float: left;
+    top: 426px;
+    color: #889aa4;
+    cursor: pointer;
+  }
+  .platform-button:hover{
+    color:#eee;
   }
 }
 </style>

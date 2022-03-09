@@ -20,7 +20,7 @@ export function getRole(roleId) {
 // 查询角色详细
 export function getRoleOptions() {
   return request({
-    url: '/system/role/options',
+    url: '/user/role-select',
     method: 'get'
   })
 }

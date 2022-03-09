@@ -9,7 +9,8 @@ const state = {
   avatar: '',
   isFirst: false,
   roles: undefined,
-  userInfo: {}
+  userInfo: {},
+  role: 0,
 }
 
 const mutations = {
@@ -33,6 +34,9 @@ const mutations = {
   },
   SET_USER_INFO: (state, info) => {
     state.userInfo = info
+  },
+  SET_ROLE:(state,role) =>{
+    state.role =role
   }
 }
 
@@ -64,13 +68,14 @@ const actions = {
     return new Promise((resolve, reject) => {
       getInfo().then(response => {
         const { data } = response || []
-        const { id, nickname, avatar, roles } = data
+        const { id, nickname, avatar, roles,roleId } = data
         commit('SET_USER_INFO', data)
         commit('SET_ROLES', roles || [])
         commit('SET_NAME', nickname)
         commit('SET_AVATAR', avatar)
         commit('SET_FIRST', 0)
         commit('SET_ID', id)
+        commit('SET_ROLE',roleId || 0)
         resolve(data)
       }).catch(error => {
         reject(error)

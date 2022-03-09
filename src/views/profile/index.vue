@@ -54,7 +54,7 @@
             <el-tab-pane :label="$t('profile.changePassword')" name="resetPwd">
               <resetPwd :user="userInfo" />
             </el-tab-pane>
-            <el-tab-pane v-if="userInfo.roleId === 3" label="讲师信息" name="teacher">
+            <el-tab-pane v-if="userInfo.roleId === 2" label="讲师信息" name="teacher">
               <resetPwd :user="userInfo" />
             </el-tab-pane>
           </el-tabs>

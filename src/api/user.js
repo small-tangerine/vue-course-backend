@@ -18,28 +18,28 @@ export function resetPassword(data) {
 
 export function updateBaseInfo(data) {
   return request({
-    url: '/user/update-base-info',
+    url: '/user-info/update-base-info',
     method: 'post',
     data
   })
 }
 export function updateTeacherInfo(data) {
   return request({
-    url: '/user/update-teacher-info',
+    url: '/user-info/update-teacher-info',
     method: 'post',
     data
   })
 }
 export function updatePhone(data) {
   return request({
-    url: '/user/update-phone',
+    url: '/user-info/update-phone',
     method: 'post',
     data
   })
 }
 export function updateEmail(data) {
   return request({
-    url: '/user/update-email',
+    url: '/user-info/update-email',
     method: 'post',
     data
   })

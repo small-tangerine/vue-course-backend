@@ -27,7 +27,7 @@ export default {
     teacher: '教师信息',
     fileCategory: '文件分类',
     forum: '论坛管理',
-    posting: '帖子管理',
+    order: '订单管理',
     courseList: '课程列表',
     article: '文章管理',
     resource: '资源管理',
@@ -39,7 +39,6 @@ export default {
     tag: '标签管理',
     userList: '用户管理',
     authentication: '实名认证',
-
     documentation: '文档',
     guide: '引导页',
     rolePermission: '角色权限',

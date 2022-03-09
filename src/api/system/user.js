@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 查询用户列表
 export function listUser(query) {
   return request({
-    url: '/system/user',
+    url: '/user/list',
     method: 'get',
     params: query
   })
@@ -38,7 +38,7 @@ export function addUser(data) {
 // 新增用户
 export function assignRole(data) {
   return request({
-    url: '/system/user/assign-role',
+    url: '/user/assign-role',
     method: 'post',
     data: data
   })

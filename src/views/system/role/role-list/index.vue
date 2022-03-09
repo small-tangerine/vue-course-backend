@@ -209,8 +209,7 @@ import {
   updateRole,
   exportRole,
   dataScope,
-  menuScope,
-  changeRoleStatus
+  menuScope
 } from '@/api/system/role'
 import { treeselect as menuTree } from '@/api/system/menu'
 import { treeselect as permissionTree } from '@/api/system/permission'
