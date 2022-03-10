@@ -65,10 +65,10 @@ export function updateUser(data) {
 // 删除用户
 export function delUser(id) {
   return request({
-    url: '/system/user',
-    method: 'delete',
-    params: {
-      ids: id + ''
+    url: '/user/delete',
+    method: 'post',
+    data:{
+      ids:id
     }
   })
 }
@@ -227,5 +227,15 @@ export function registerUser(data) {
     url: '/system/portal/user/register',
     method: 'post',
     data
+  })
+}
+
+export function getTeacherInfo(id){
+  return request({
+    url: '/user/teacher-info',
+    method: 'get',
+    params: {
+      id:id
+    }
   })
 }

@@ -1,25 +1,30 @@
 <template>
   <div class="dashboard-container">
-    <component :is="currentRole" />
+    <div class="dashboard-text">欢迎登录在线课程后台管理系统: {{ name }} 用户</div>
   </div>
 </template>
 
 <script>
-import adminDashboard from './admin'
-import defaultDashboard from './default'
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'Dashboard',
-  components: { adminDashboard ,defaultDashboard},
   data() {
-    return {
-      currentRole: this.$store.getters.currentRole
-    }
+    return {}
+  },
+  computed: {
+    ...mapGetters([
+      'name'
+    ])
   }
 }
 </script>
 
 <style lang="scss" scoped>
 .dashboard {
+  &-container {
+    margin: 30px;
+  }
   &-text {
     font-size: 30px;
     line-height: 46px;

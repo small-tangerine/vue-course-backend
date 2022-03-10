@@ -1,6 +1,7 @@
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
 import { login, logout, getInfo } from '@/api/user'
+import defaultDashboard from '@/views/dashboard/default'
 
 const state = {
   token: getToken(),
@@ -11,6 +12,7 @@ const state = {
   roles: undefined,
   userInfo: {},
   role: 0,
+  currentRole: 'defaultDashboard'
 }
 
 const mutations = {
@@ -37,6 +39,13 @@ const mutations = {
   },
   SET_ROLE:(state,role) =>{
     state.role =role
+    if (role === 1){
+      state.currentRole='adminDashboard'
+    }else if (role === 2){
+      state.currentRole='adminDashboard'
+    }else {
+      state.currentRole='defaultDashboard'
+    }
   }
 }
 
