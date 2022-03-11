@@ -70,8 +70,9 @@ export default {
     getInfo() {
       this.infoLoading = true
       getInfoIndex().then(res => {
+        const {data} =res
         if (res.error === 0) {
-          this.indexData = res.data || []
+          this.indexData = data || {}
           const { dayData, nowData } = res.data || []
           this.infoLoading = false
           this.lineChartData = { dayData: dayData || [], nowData: nowData || [],addTitle:'新增用户',totalTitle:'总用户量' }
@@ -103,7 +104,7 @@ export default {
 
   .github-corner {
     position: absolute;
-    top: 0px;
+    top: 0;
     border: 0;
     right: 0;
   }
