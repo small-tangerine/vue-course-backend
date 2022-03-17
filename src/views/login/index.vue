@@ -131,8 +131,8 @@ export default {
       flag: true,
       buttonText: '发送验证码',
       loginForm: {
-        username: '13630497916',
-        password: 'String@1234',
+        username: undefined,
+        password: undefined,
         checkPassword: undefined,
         verifyCode: undefined
       },
