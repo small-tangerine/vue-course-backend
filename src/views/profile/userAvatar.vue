@@ -144,7 +144,7 @@ export default {
     },
     // 实时预览
     realTime(data) {
-      console.log(data)
+      // console.log(data)
       this.previews = data
     }
   }

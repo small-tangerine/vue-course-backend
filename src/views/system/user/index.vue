@@ -55,7 +55,7 @@
       </el-col>
       <el-col :span="1.5">
           <el-button
-            v-permission="['sys:user:update']"
+            v-permission="['sys:user:reset:password']"
             type="warning"
             icon="el-icon-switch-button"
             size="mini"

@@ -125,7 +125,7 @@
             {{scope.row.auditStatus === 0 ? '未审核':(scope.row.auditStatus === 1 ? '审核通过':'审核不通过')}}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="学习人数" prop="learnPersons" align="center" :show-overflow-tooltip="true" width="90">
+      <el-table-column label="学习人数" prop="learnPersons" align="center" :show-overflow-tooltip="true" width="90" v-if="checkPermission(['sys:course:student:query'])">
         <template v-slot="scope">
           <span style="cursor: pointer;color: #409EFF;" v-if="scope.row.learnPersons >0" @click="goToStudent(scope.row)">{{scope.row.learnPersons}}</span>
           <span v-else>{{scope.row.learnPersons}}</span>
@@ -148,7 +148,7 @@
           >课程详情
           </el-button>
           <el-button
-            v-permission="['sys:course:detail:view']"
+            v-permission="['sys:course:video:query']"
             size="mini"
             type="text"
             icon="el-icon-video-camera"
@@ -166,7 +166,7 @@
           </el-button>
           <el-button
             v-if="scope.row.auditStatus ===0"
-            v-permission="['sys:course:update']"
+            v-permission="['sys:course:audit']"
             size="mini"
             type="text"
             icon="el-icon-document-checked"

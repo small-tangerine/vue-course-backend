@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-descriptions direction="vertical" title="添加课程">
       <template slot="extra">
-        <el-button type="primary" @click="submitCourse">提交</el-button>
+        <el-button type="primary" @click="submitCourse" v-permission="['sys:permission:create']">提交</el-button>
         <el-button type="info" size="mini" @click="resetForm">重置</el-button>
         <el-button size="mini" @click="returnGo">返回</el-button>
       </template>

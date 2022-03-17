@@ -55,12 +55,12 @@ const actions = {
       // 向后端请求路由数据
       getRouters({ username: name }).then(res => {
         const accessedRoutes = filterAsyncRouter(res.data || [])
-        console.log(accessedRoutes)
+        // console.log(accessedRoutes)
         accessedRoutes.push({ path: '*', redirect: '/404', hidden: true })
         commit('SET_ROUTES', accessedRoutes)
         resolve(accessedRoutes)
       }).catch(error => {
-        console.log(error)
+        // console.log(error)
         reject(error)
       })
     })

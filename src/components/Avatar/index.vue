@@ -129,7 +129,7 @@ export default {
     // 上传图片
     uploadImg () {
       this.$refs.cropper.getCropBlob(data => {
-        console.log(data)
+        // console.log(data)
         const formData = new FormData()
         formData.append('image', data, this.fileName)
         uploadUserAvatar(formData).then(res => {
@@ -146,7 +146,7 @@ export default {
     },
     // 实时预览
     realTime(data) {
-      console.log(data)
+      // console.log(data)
       this.previews = data
     }
   }

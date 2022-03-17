@@ -4,7 +4,7 @@
                      border>
 
       <template slot="extra">
-        <el-button v-if="status===0"    v-permission="['sys:course:update']" type="danger" size="large" @click="openAudit" style="margin-right: 20px">审核</el-button>
+        <el-button v-if="status===0"    v-permission="['sys:course:audit']" type="danger" size="large" @click="openAudit" style="margin-right: 20px">审核</el-button>
         <el-button type="primary" size="mini" @click="returnGo">返回</el-button>
       </template>
       <el-descriptions-item :contentStyle="{'text-align': 'center'}">
@@ -244,7 +244,7 @@ export default {
     },
     getDetail(id) {
       courseDetail({id: id}).then(res => {
-        console.log(res)
+        // console.log(res)
         if (res.error === 0) {
           const {data} = res || {}
           this.course = data || {}

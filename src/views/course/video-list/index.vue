@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-form v-permission="['sys:course:query']" v-show="showSearch" ref="queryForm" :model="queryParams" :inline="true"
+    <el-form v-permission="['sys:course:video:query']" v-show="showSearch" ref="queryForm" :model="queryParams" :inline="true"
              @submit.native.prevent>
       <el-form-item label="关键词" prop="keyword">
         <el-input
@@ -43,7 +43,7 @@
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button
-          v-permission="['sys:course:create']"
+          v-permission="['sys:course:video:create']"
           type="primary"
           icon="el-icon-plus"
           size="mini"
@@ -51,7 +51,7 @@
         >新增课程视频
         </el-button>
       </el-col>
-      <right-toolbar v-permission="['sys:course:query']" :show-search.sync="showSearch" @queryTable="getList"/>
+      <right-toolbar v-permission="['sys:course:video:query']" :show-search.sync="showSearch" @queryTable="getList"/>
     </el-row>
 
     <el-table v-loading="loading" :data="videoList">
@@ -94,7 +94,7 @@
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="学习人数" prop="learnPersons" align="center" :show-overflow-tooltip="true" width="90">
+      <el-table-column label="学习人数" prop="learnPersons" align="center" :show-overflow-tooltip="true" width="90" v-if="checkPermission(['sys:course:video:student:query'])">
         <template v-slot="scope">
           <span style="cursor: pointer;color: #409EFF;" v-if="scope.row.learnPersons >0"
                 @click="goToStudent(scope.row)">{{ scope.row.learnPersons }}</span>
@@ -109,7 +109,7 @@
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width" fixed="right" width="100">
         <template v-slot="scope">
           <el-button
-            v-permission="['sys:course:update']"
+            v-permission="['sys:course:video:update']"
             size="mini"
             type="text"
             icon="el-icon-edit"
@@ -118,7 +118,7 @@
           </el-button>
           <el-button
             v-if="scope.row.auditStatus ===0"
-            v-permission="['sys:course:update']"
+            v-permission="['sys:course:video:audit']"
             size="mini"
             type="text"
             icon="el-icon-document-checked"
@@ -126,7 +126,7 @@
           >审核视频
           </el-button>
           <el-button
-            v-permission="['sys:course:delete']"
+            v-permission="['sys:course:video:delete']"
             size="mini"
             type="text"
             icon="el-icon-delete"
@@ -296,7 +296,7 @@ export default {
   },
   methods: {
     videoInfo(item){
-      console.log(item)
+      // console.log(item)
       this.form.url=item.url
       this.form.fileUrl=item.fileUrl
       this.form.fileSize=item.fileSize

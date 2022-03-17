@@ -2,7 +2,7 @@
   <div class="app-container">
   <!-- 分类列表 -->
 
-        <el-form v-permission="['sys:course:query']"  ref="queryForm" :model="queryParams" :inline="true"
+        <el-form v-permission="['sys:course:student:query']"  ref="queryForm" :model="queryParams" :inline="true"
                  @submit.native.prevent>
           <el-form-item label="关键词" prop="keyword">
             <el-input

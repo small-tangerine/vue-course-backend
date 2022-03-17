@@ -78,16 +78,6 @@
               >删除
               </el-button>
             </el-col>
-            <el-col v-permission="['sys:category:export']" :span="1.5">
-              <el-button
-                type="warning"
-                icon="el-icon-download"
-                size="mini"
-                @click="handleExport"
-              >导出
-              </el-button>
-              <el-checkbox v-model="checkAll">导出所有数据</el-checkbox>
-            </el-col>
             <right-toolbar v-permission="['sys:category:query']" :show-search.sync="showSearch"
                            @queryTable="handleQuery"
             />
@@ -424,27 +414,6 @@ export default {
           message: res.msg,
           type: 'success'
         })
-      })
-    },
-    /** 导出按钮操作 */
-    handleExport() {
-      const queryParams = this.queryParams
-      if (this.checkAll) {
-        queryParams.page = undefined
-        queryParams.pageSize = undefined
-        queryParams.data.parentId = undefined
-        queryParams.export = 'all'
-      }
-      const str = queryParams.export ? '当前' : '所有'
-      this.$confirm('确认导出' + str + '分类数据项?', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(function() {
-        return exportData(queryParams)
-      }).then(response => {
-        this.download(response.data || '分类数据')
-        this.checkAll = false
       })
     }
   }

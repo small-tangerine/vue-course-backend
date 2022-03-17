@@ -51,16 +51,6 @@
         >删除
         </el-button>
       </el-col>
-      <el-col v-permission="['sys:role:export']" :span="1.5">
-        <el-button
-          type="warning"
-          icon="el-icon-download"
-          size="mini"
-          @click="handleExport"
-        >导出
-        </el-button>
-        <el-checkbox v-model="checkAll">导出所有数据</el-checkbox>
-      </el-col>
       <right-toolbar v-permission="['sys:role:query']" :show-search.sync="showSearch" @queryTable="getList"/>
     </el-row>
 
@@ -91,15 +81,7 @@
           >修改
           </el-button>
           <el-button
-            v-permission="['sys:role:menu']"
-            size="mini"
-            type="text"
-            icon="el-icon-menu"
-            @click="handleMenuScope(scope.row)"
-          >显示菜单
-          </el-button>
-          <el-button
-            v-permission="['sys:role:permission']"
+            v-if=" checkPermission(['sys:role:permission'])&&checkPermission(['sys:role:menu:list'])"
             size="mini"
             type="text"
             icon="el-icon-circle-check"
@@ -207,12 +189,11 @@ import {
   delRole,
   addRole,
   updateRole,
-  exportRole,
   dataScope,
   menuScope
 } from '@/api/system/role'
 import { treeselect as permissionTree } from '@/api/system/permission'
-
+import checkPermission from '@/utils/permission';
 export default {
   name: 'Role',
   data() {
@@ -448,23 +429,6 @@ export default {
 
       this.title = '分配角色访问权限'
     },
-    async handleMenuScope(row) {
-      await this.reset()
-      this.form = row
-      this.openMenuScope = true
-      this.$nextTick(() => {
-        const checked = []
-        const data = JSON.parse(row.menuCollect) || []
-        data.forEach((i) => {
-          const node = this.$refs.menu.getNode(i)
-          if (node && node.isLeaf) {
-            checked.push(i)
-          }
-        })
-        this.menuCheckeds = checked
-      })
-      this.title = '分配显示菜单'
-    },
     /** 提交按钮 */
     submitForm: function() {
       this.$refs['form'].validate(valid => {
@@ -539,26 +503,6 @@ export default {
           message: res.msg,
           type: 'success'
         })
-      })
-    },
-    /** 导出按钮操作 */
-    handleExport() {
-      const queryParams = this.queryParams
-      if (this.checkAll) {
-        queryParams.pageNum = undefined
-        queryParams.pageSize = undefined
-        queryParams.export = 'all'
-      }
-      const str = queryParams.export ? '所有' : '当前'
-      this.$confirm('是否确认导出' + str + '角色数据项?', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(function() {
-        return exportRole(queryParams)
-      }).then(response => {
-        this.download(response.data || '角色数据.xlsx')
-        this.checkAll = false
       })
     },
     renderContent(h, { node, data }) {

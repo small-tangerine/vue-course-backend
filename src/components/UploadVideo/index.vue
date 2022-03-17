@@ -97,14 +97,14 @@ export default {
           totalChunks: chunk.offset,
         }).then((res) => {
           if (res.error === 0) {
-            console.log("上传成功");
+            // console.log("上传成功");
             this.$emit("videoInfo",res.data)
           } else {
-            console.log(res);
+            // console.log(res);
           }
         })
           .catch(function (error) {
-            console.log(error);
+            // console.log(error);
           });
     },
     fileComplete(rootFile) {

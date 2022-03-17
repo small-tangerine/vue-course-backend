@@ -101,7 +101,7 @@ export default {
       this.show = false
     },
     change(val) {
-      console.log(val)
+      // console.log(val)
       this.$router.push(val.path)
       this.search = ''
       this.options = []
@@ -164,11 +164,11 @@ export default {
       if (query !== '') {
         const item = this.fuse.search(query) || []
         const that = this
-        console.log(item)
+        // console.log(item)
         item.map(function(params) {
           that.options.push(params)
         })
-        console.log(this.options)
+        // console.log(this.options)
       } else {
         this.options = []
       }

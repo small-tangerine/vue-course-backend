@@ -3,7 +3,7 @@
     <el-descriptions class="margin-top" title="讲师信息" :column="4" border style="margin-bottom: 5px">
 
       <template slot="extra">
-        <el-button type="info" size="mini" @click="handleUpdate">修改</el-button>
+        <el-button v-permission="['sys:user:teacher:update']" type="info" size="mini" @click="handleUpdate">修改</el-button>
         <el-button type="primary" size="mini" @click="returnUser">返回</el-button>
       </template>
       <el-descriptions-item :contentStyle="{'text-align': 'center'}">
@@ -94,7 +94,7 @@ export default {
   },
   created() {
     const id = this.$route.query && this.$route.query.id
-    console.log(id)
+    // console.log(id)
     if (id) {
       this.userId = id-0
       this.teacherInfo(id)

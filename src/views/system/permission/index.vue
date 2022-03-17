@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-form v-permission="['sys:role:query']" v-show="showSearch" ref="queryForm" :model="queryParams" :inline="true">
+    <el-form v-permission="['sys:permission:query']" v-show="showSearch" ref="queryForm" :model="queryParams" :inline="true">
       <el-form-item label="菜单名称" prop="keyword">
         <el-input
           v-model="queryParams.keyword"
@@ -38,7 +38,7 @@
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button
-          v-permission="['sys:role:create']"
+          v-permission="['sys:permission:create']"
           type="primary"
           icon="el-icon-plus"
           size="mini"
@@ -48,7 +48,7 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
-          v-permission="['sys:role:update']"
+          v-permission="['sys:permission:update']"
           type="success"
           icon="el-icon-edit"
           size="mini"
@@ -59,7 +59,7 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
-          v-permission="['sys:role:delete']"
+          v-permission="['sys:permission:delete']"
           type="danger"
           icon="el-icon-delete"
           size="mini"
@@ -68,7 +68,7 @@
         >删除
         </el-button>
       </el-col>
-      <right-toolbar v-permission="['sys:role:query']" :show-search.sync="showSearch" @queryTable="handleQuery" />
+      <right-toolbar v-permission="['sys:permission:query']" :show-search.sync="showSearch" @queryTable="handleQuery" />
     </el-row>
 
     <el-table
@@ -91,7 +91,7 @@
       <el-table-column prop="displayOrder" label="排序" width="60" align="center" />
       <el-table-column prop="path" label="访问路径" :show-overflow-tooltip="true" align="center" />
       <el-table-column prop="component" label="组件路径" :show-overflow-tooltip="true" align="center" />
-      <el-table-column label="是否隐藏" align="center" width="100" v-if="checkPermission(['sys:role:update'])">
+      <el-table-column label="是否隐藏" align="center" width="90" v-if="checkPermission(['sys:permission:hidden'])">
         <template slot-scope="scope">
           <el-switch
             v-if="scope.row.typeId !== 3 "
@@ -104,11 +104,11 @@
           />
         </template>
       </el-table-column>
-      <el-table-column label="创建时间" align="center" prop="createdAt"/>
+      <el-table-column label="创建时间" align="center" prop="createdAt" width="150"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
-            v-permission="['sys:role:create']"
+            v-permission="['sys:permission:create']"
             style="margin-left: 10px;"
             size="mini"
             type="text"
@@ -117,7 +117,7 @@
           >修改
           </el-button>
           <el-button
-            v-permission="['sys:role:update']"
+            v-permission="['sys:permission:create']"
             v-if="scope.row.typeId !== 3"
             size="mini"
             type="text"
@@ -126,7 +126,7 @@
           >新增
           </el-button>
           <el-button
-            v-permission="['sys:role:delete']"
+            v-permission="['sys:permission:delete']"
             size="mini"
             type="text"
             icon="el-icon-delete"
