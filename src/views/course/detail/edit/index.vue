@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-descriptions direction="vertical" title="添加课程">
       <template slot="extra">
-        <el-button type="primary" @click="checkSubmitCourse" v-permission="['sys:permission:update']">提交</el-button>
+        <el-button type="primary" @click="checkSubmitCourse" v-permission="['sys:course:update']">提交</el-button>
         <el-button type="info" size="mini" @click="resetForm">重置</el-button>
         <el-button size="mini" @click="returnGo">返回</el-button>
       </template>
@@ -41,7 +41,7 @@
               <el-option
                 v-for="item in recommendOptions"
                 :key="item.value"
-                :disabled="item.value ===1 &&courseForm.type===2"
+                :disabled="item.value ===1 &&courseForm.type===1"
                 :label="item.label"
                 :value="item.value"
               >
