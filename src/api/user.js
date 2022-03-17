@@ -74,3 +74,11 @@ export function uploadAvatar(data)
     data
   })
 }
+export function uploadUserAvatar(data)
+{
+  return request({
+    url: '/avatar/user-upload',
+    method: 'post',
+    data
+  })
+}

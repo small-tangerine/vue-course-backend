@@ -37,15 +37,14 @@ export default {
       infoLoading: false,
       lineChartData: {},
       indexData: {
-        dayArticle: 0,
-        dayOnline: 0,
-        dayResource: 0,
         dayUser: 0,
-        dayVisit: 0,
-        nowOnline: 0,
-        totalArticle: 0,
-        totalResource: 0,
-        totalUser: 0
+       totalUser: 0,
+       dayCourse: 0,
+       totalCourse: 0,
+       dayCost: 0,
+       totalCost: 0,
+       dayOrder:0,
+       totalOrder:0
       },
       timer: ''
     }
@@ -62,32 +61,43 @@ export default {
       this.getInfo()
     },
     handleSetLineChartData(type) {
-      this.lineChartData = {
-        dayData: [120, 82, 91, 154, 162, 140, 145],
-        nowData: [100, 120, 161, 134, 105, 160, 165],addTitle:'新增课程',totalTitle:'课程总量'
-      }
+      this.getInfo(type)
     },
-    getInfo() {
+    getInfo(type) {
       this.infoLoading = true
-      getInfoIndex().then(res => {
+      getInfoIndex(type).then(res => {
         const {data} =res
         if (res.error === 0) {
           this.indexData = data || {}
-          const { dayData, nowData } = res.data || []
+          const { dayData, totalData,addTitle,totalTitle,dayCostData,totalCostData } = res.data || []
           this.infoLoading = false
-          this.lineChartData = { dayData: dayData || [], nowData: nowData || [],addTitle:'新增用户',totalTitle:'总用户量' }
+          if (type ===2 ){
+            this.lineChartData = {
+              dayData: dayCostData || [],
+              totalData: totalCostData || [],
+              addTitle: addTitle,
+              totalTitle: totalTitle
+            }
+          }else {
+            this.lineChartData = {
+              dayData: dayData || [],
+              totalData: totalData || [],
+              addTitle: addTitle,
+              totalTitle: totalTitle
+            }
+          }
         } else {
           this.infoLoading = true
           this.lineChartData = {
             dayData: [],
-            nowData: [],addTitle:'',totalTitle:''
+            totalData: [],addTitle:'',totalTitle:''
           }
         }
       }).catch(() => {
         this.infoLoading = false
         this.lineChartData = {
           dayData: [100, 120, 161, 134, 105, 160, 165],
-          nowData: [120, 82, 91, 154, 162, 140, 145],
+          totalData: [120, 82, 91, 154, 162, 140, 145],
           addTitle:'默认1',totalTitle:'默认2'
         }
       })

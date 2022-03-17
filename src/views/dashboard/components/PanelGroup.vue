@@ -1,7 +1,7 @@
 <template>
   <el-row :gutter="40" class="panel-group">
     <el-col v-if="roleId === 1" :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel">
+      <div class="card-panel" @click="handleSetLineChartData(0)">
         <div class="card-panel-icon-wrapper icon-message">
           <svg-icon icon-class="peoples" class-name="card-panel-icon"/>
         </div>
@@ -20,7 +20,7 @@
       </div>
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('newVisitis')">
+      <div class="card-panel" @click="handleSetLineChartData(1)">
         <div class="card-panel-icon-wrapper icon-course">
           <svg-icon icon-class="article" class-name="card-panel-icon"/>
         </div>
@@ -28,18 +28,18 @@
           <div class="card-panel-text">
             课程总量
           </div>
-          <count-to :start-val="0" :end-val="indexData.totalArticle" :duration="3200" class="card-panel-num"/>
+          <count-to :start-val="0" :end-val="indexData.totalCourse" :duration="3200" class="card-panel-num"/>
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
             新课程
           </div>
-          <count-to :start-val="0" :end-val="indexData.dayArticle" :duration="3200" class="card-panel-num"/>
+          <count-to :start-val="0" :end-val="indexData.dayCourse" :duration="3200" class="card-panel-num"/>
         </div>
       </div>
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel">
+      <div class="card-panel" @click="handleSetLineChartData(2)">
         <div class="card-panel-icon-wrapper icon-money">
           <svg-icon icon-class="money" class-name="card-panel-icon"/>
         </div>
@@ -47,18 +47,18 @@
           <div class="card-panel-text">
             总销售额
           </div>
-          <count-to :start-val="0" :end-val="indexData.totalResource" :duration="3600" class="card-panel-num"/>
+          <count-to :decimals="2" :start-val="0" :end-val="indexData.totalCost" :duration="3600" class="card-panel-num"/>
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
            销售额
           </div>
-          <count-to :start-val="0" :end-val="indexData.dayResource" :duration="3600" class="card-panel-num"/>
+          <count-to :decimals="2" :start-val="0" :end-val="indexData.dayCost" :duration="3600" class="card-panel-num"/>
         </div>
       </div>
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel">
+      <div class="card-panel" @click="handleSetLineChartData(3)">
         <div class="card-panel-icon-wrapper icon-shopping">
           <svg-icon icon-class="shopping" class-name="card-panel-icon"/>
         </div>
@@ -66,13 +66,13 @@
           <div class="card-panel-text">
             订单总量
           </div>
-          <count-to :start-val="0" :end-val="indexData.totalResource" :duration="3600" class="card-panel-num"/>
+          <count-to :start-val="0" :end-val="indexData.totalOrder" :duration="3600" class="card-panel-num"/>
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
             新订单
           </div>
-          <count-to :start-val="0" :end-val="indexData.dayResource" :duration="3600" class="card-panel-num"/>
+          <count-to :start-val="0" :end-val="indexData.dayOrder" :duration="3600" class="card-panel-num"/>
         </div>
       </div>
     </el-col>

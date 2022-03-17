@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-form v-permission="['sys:role:query']" v-show="showSearch" ref="queryForm" :model="queryParams" :inline="true" @submit.native.prevent>
+    <el-form v-permission="['sys:order:query']" v-show="showSearch" ref="queryForm" :model="queryParams" :inline="true" @submit.native.prevent>
       <el-form-item label="订单号" prop="code">
         <el-input
           v-model="queryParams.code"
@@ -33,7 +33,7 @@
       <el-form-item label="支付方式" prop="payType">
         <el-select
           v-model="queryParams.payType"
-          placeholder="状态"
+          placeholder="方式"
           clearable
           size="small"
           style="width: 100px"
@@ -57,7 +57,7 @@
     <el-row :gutter="10" class="mb8">
       <el-col v-if="totalCost > 0" style="margin-top: 5px;width: 200px"><span style="font-weight: bold">订单总额： ￥{{totalCost}}</span></el-col>
       <el-col  v-if="payCost > 0"  style="margin-top: 5px;width: 200px"><span style="color: #ff4949; font-weight: bold">交易总额： ￥{{payCost}}</span></el-col>
-      <right-toolbar v-permission="['sys:role:query']" :show-search.sync="showSearch" @queryTable="getList"/>
+      <right-toolbar v-permission="['sys:order:query']" :show-search.sync="showSearch" @queryTable="getList"/>
     </el-row>
 
     <el-table v-loading="loading" :data="orderList" @selection-change="handleSelectionChange">
@@ -89,7 +89,7 @@
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width" fixed="right">
         <template v-slot="scope">
           <el-button
-            v-permission="['sys:user:view']"
+            v-permission="['sys:order:detail:query']"
             size="mini"
             type="text"
             icon="el-icon-view"
@@ -97,7 +97,7 @@
           >订单详情
           </el-button>
           <el-button
-            v-permission="['sys:role:update']"
+            v-permission="['sys:order:update']"
             size="mini"
             type="text"
             icon="el-icon-edit"
@@ -105,7 +105,7 @@
           >修改
           </el-button>
           <el-button
-            v-permission="['sys:role:delete']"
+            v-permission="['sys:order:delete']"
             size="mini"
             type="text"
             icon="el-icon-delete"
@@ -239,7 +239,9 @@ export default {
   },
   methods: {
     handleView(row){
-
+        this.$router.push({path:'/order/detail-list', query: {
+        id: row.id,code:row.code},
+      replace: true})
     },
     /** 查询角色列表 */
     getList() {

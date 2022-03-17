@@ -24,7 +24,7 @@ export default {
   },
   data() {
     return {
-      logo: 'https://orange-1257629157.cos.ap-shenzhen-fsi.myqcloud.com/avatar/logo.png'
+      logo: 'http://localhost/manager/favicon.ico'
     }
   }
 }

@@ -53,14 +53,6 @@ export function getUserRoleInfo(id) {
   })
 }
 
-// 修改用户
-export function updateUser(data) {
-  return request({
-    url: '/system/user',
-    method: 'put',
-    data: data
-  })
-}
 
 // 删除用户
 export function delUser(id) {
@@ -72,7 +64,13 @@ export function delUser(id) {
     }
   })
 }
-
+export function updateTeacherInfo(data) {
+  return request({
+    url: '/user/teacher-update',
+    method: 'post',
+    data
+  })
+}
 // 导出用户
 export function exportUser(query) {
   return request({
@@ -90,7 +88,7 @@ export function resetUserPassword(ids, password) {
     password
   }
   return request({
-    url: '/system/user/reset-password',
+    url: '/user/reset-password',
     method: 'post',
     data: data
   })
@@ -222,14 +220,21 @@ export function exportUserFavor(query) {
   })
 }
 
-export function registerUser(data) {
+export function updateUser(data) {
   return request({
-    url: '/system/portal/user/register',
+    url: '/user/update',
     method: 'post',
     data
   })
 }
 
+export function createUser(data) {
+  return request({
+    url: '/user/create',
+    method: 'post',
+    data
+  })
+}
 export function getTeacherInfo(id){
   return request({
     url: '/user/teacher-info',

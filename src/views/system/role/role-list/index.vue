@@ -211,7 +211,6 @@ import {
   dataScope,
   menuScope
 } from '@/api/system/role'
-import { treeselect as menuTree } from '@/api/system/menu'
 import { treeselect as permissionTree } from '@/api/system/permission'
 
 export default {
@@ -307,15 +306,6 @@ export default {
     clearParams(val) {
       this.queryParams[val] = undefined
       this.handleQuery()
-    },
-    /** 查询菜单树结构 */
-    getMenuTree() {
-      menuTree().then(res => {
-        const { data } = res
-        this.menuOptions = data || []
-      }).catch(() => {
-        this.menuOptions = []
-      })
     },
     /** 查询权限资源树结构 */
     getPermissionTree() {

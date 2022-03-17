@@ -19,9 +19,9 @@ export function getData(query) {
 }
 
 // 根据字典类型查询字典数据信息
-export function getDictDetail(tablle, field) {
+export function getCategorySelect() {
   return request({
-    url: '/system/sql-dict/' + tablle + '/' + field,
+    url: '/category/select',
     method: 'get'
   })
 }

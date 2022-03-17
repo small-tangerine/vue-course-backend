@@ -59,9 +59,15 @@
 import store from '@/store'
 import { VueCropper } from 'vue-cropper'
 import { subUrlFileName } from '@/utils'
-import { uploadAvatar } from '@/api/user'
+import { uploadUserAvatar } from '@/api/user'
 export default {
   components: { VueCropper },
+  props:{
+    avatar:{
+      type:String,
+      require:true
+    }
+  },
   data() {
     return {
       fileName: subUrlFileName(store.getters.avatar),
@@ -71,18 +77,13 @@ export default {
       // 弹出层标题
       title: '修改头像',
       options: {
-        img: store.getters.avatar, // 裁剪图片的地址
+        img: this.avatar, // 裁剪图片的地址
         autoCrop: true, // 是否默认生成截图框
         autoCropWidth: 200, // 默认生成截图框宽度
         autoCropHeight: 200, // 默认生成截图框高度
         fixedBox: true // 固定截图框大小 不允许改变
       },
       previews: {}
-    }
-  },
-  computed: {
-    avatar() {
-      return store.getters.avatar
     }
   },
   methods: {
@@ -128,15 +129,16 @@ export default {
     // 上传图片
     uploadImg () {
       this.$refs.cropper.getCropBlob(data => {
+        console.log(data)
         const formData = new FormData()
         formData.append('image', data, this.fileName)
-        uploadAvatar(formData).then(res => {
+        uploadUserAvatar(formData).then(res => {
           if (res.error === 0) {
             this.$message.success(res.msg)
             this.open = false
             this.options.img = res.data.url
             this.previews.url =res.data.url
-            store.commit('user/SET_AVATAR', res.data.url)
+            this.$emit("updateAvatar",res.data.url)
             this.visible = false
           }
         })

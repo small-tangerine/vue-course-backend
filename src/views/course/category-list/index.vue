@@ -169,7 +169,7 @@
                 </el-form-item>
               </el-form>
               <el-button
-                v-if="checkPermission(['sys:category:level:query']) && showDetailAdd"
+                v-if="checkPermission(['sys:category:update']) && showDetailAdd"
                 class="filter-item"
                 size="mini"
                 style="float: right;padding: 4px 10px;margin-top: -52px"

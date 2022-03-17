@@ -18,15 +18,20 @@ import '@/icons' // 图标
 import '@/permission' // 权限控制
 import checkPermission from "@/utils/permission";
 import RightToolbar from '@/components/RightToolbar'
+import {handleTree,resetForm} from "@/utils/utils";
 // 中文版 element-ui
 //  如果想要设置 ElementUI 语言为英文，按如下方式声明
 // Vue.use(ElementUI, { locale })
+import uploader from 'vue-simple-uploader'
+Vue.prototype.handleTree = handleTree
+Vue.use(uploader)
 import * as echarts from 'echarts';
 Vue.prototype.$echarts = echarts;
 Vue.use(ElementUI, {
   size: Cookies.get('size') || 'medium', // set element-ui default size
   i18n: (key, value) => i18n.t(key, value)
 })
+Vue.prototype.resetForm = resetForm
 Vue.config.productionTip = false
 Vue.component('Pagination', Pagination)
 Vue.component('RightToolbar', RightToolbar)

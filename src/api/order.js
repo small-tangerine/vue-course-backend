@@ -44,14 +44,11 @@ export function updateOrder(data) {
 }
 
 // 角色数据权限
-export function dataScope(id, resources) {
+export function listDetail(id) {
   return request({
-    url: '/order/permission-scope',
-    method: 'post',
-    data: {
-      id: id,
-      resourceCollect: resources
-    }
+    url: '/order/detail-list',
+    method: 'get',
+    params:id
   })
 }
 

@@ -67,18 +67,6 @@ export function menuScope(id, menus) {
   })
 }
 
-// 角色状态修改
-export function changeRoleStatus(roleId, status) {
-  const data = {
-    id: roleId,
-    isEnabled: status
-  }
-  return request({
-    url: '/system/role/status',
-    method: 'put',
-    data: data
-  })
-}
 
 // 删除角色
 export function delRole(roleId) {

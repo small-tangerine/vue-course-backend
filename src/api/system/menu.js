@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 查询菜单列表
 export function listMenu(query) {
   return request({
-    url: '/system/menu',
+    url: '/permission/list',
     method: 'get',
     params: query
   })
@@ -12,15 +12,7 @@ export function listMenu(query) {
 // 查询菜单详细
 export function getMenu(menuId) {
   return request({
-    url: '/system/menu/' + menuId,
-    method: 'get'
-  })
-}
-
-// 查询菜单下拉树结构
-export function treeselect() {
-  return request({
-    url: '/system/menu/tree',
+    url: '/permission/' + menuId,
     method: 'get'
   })
 }
@@ -29,7 +21,7 @@ export function treeselect() {
 // 新增菜单
 export function addMenu(data) {
   return request({
-    url: '/system/menu',
+    url: '/permission/create',
     method: 'post',
     data: data
   })
@@ -38,8 +30,8 @@ export function addMenu(data) {
 // 修改菜单
 export function updateMenu(data) {
   return request({
-    url: '/system/menu',
-    method: 'put',
+    url: '/permission/update',
+    method: 'post',
     data: data
   })
 }
@@ -47,47 +39,22 @@ export function updateMenu(data) {
 // 删除菜单
 export function delMenu(menuId) {
   return request({
-    url: '/system/menu',
-    method: 'delete',
-    params: {
-      ids: menuId + ''
+    url: '/permission/delete',
+    method: 'post',
+    data: {
+      ids: menuId
     }
   })
 }
 
 // 修改菜单状态
-export function changeMenuStatus(menuId, status,menuType) {
+export function changeMenuHiddenStatus(menuId) {
   const data = {
-    menuType: menuType,
-    id: menuId,
-    isEnabled: status
+    id: menuId
   }
   return request({
-    url: '/system/menu/status',
-    method: 'put',
+    url: '/permission/hidden-status',
+    method: 'post',
     data: data
-  })
-}
-
-// 修改菜单状态
-export function changeMenuHiddenStatus(menuId, status,menuType) {
-  const data = {
-    menuType: menuType,
-    id: menuId,
-    isHidden: status
-  }
-  return request({
-    url: '/system/menu/hidden-status',
-    method: 'put',
-    data: data
-  })
-}
-
-// 导出菜单数据
-export function exportMenu(query) {
-  return request({
-    url: '/system/menu/export',
-    method: 'get',
-    params: query
   })
 }

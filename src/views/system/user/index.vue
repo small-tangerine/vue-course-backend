@@ -54,17 +54,15 @@
         </el-button>
       </el-col>
       <el-col :span="1.5">
-        <el-tooltip class="item" effect="dark" content="初始密码: orange_123456" placement="bottom">
           <el-button
-            v-permission="['sys:user:reset']"
-            type="danger"
+            v-permission="['sys:user:update']"
+            type="warning"
             icon="el-icon-switch-button"
             size="mini"
             :disabled="multiple"
             @click="handleResetPwd"
           >重置密码
           </el-button>
-        </el-tooltip>
       </el-col>
 
       <right-toolbar v-permission="['sys:user:query']" :show-search.sync="showSearch" @queryTable="getList"/>
@@ -162,11 +160,25 @@
                :close-on-click-modal="false"
     >
       <el-form ref="userForm" :model="userForm" :rules="ruleValidate" label-width="80px">
+        <el-form-item label="用户头像" prop="avatar" style="display: flex;align-items: center">
+          <avatar :avatar="userForm.avatar" @updateAvatar="updateAvatar"/>
+        </el-form-item>
         <el-form-item label="用户账号" prop="username">
           <el-input v-model="userForm.username" placeholder="请输入用户账号"/>
         </el-form-item>
-        <el-form-item label="昵称" prop="nickname">
+        <el-form-item label="昵称">
           <el-input v-model="userForm.nickname" placeholder="请输入用户昵称"/>
+        </el-form-item>
+        <el-form-item label="角色" prop="roleId">
+          <el-select v-model="userForm.roleId" placeholder="请选择角色" clearable style="width:100%;">
+            <el-option
+              v-for="item in roleOptions"
+              :key="item.roleId"
+              :label="item.title"
+              :value="item.roleId"
+            >
+            </el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="密码" prop="password" v-if="!isUpdate">
           <el-input
@@ -194,11 +206,23 @@
             <el-radio label="female">女</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="手机号" prop="mobile">
+        <el-form-item label="手机号" v-if="!isUpdate">
           <el-input v-model="userForm.mobile" placeholder="请输入手机号"/>
         </el-form-item>
-        <el-form-item label="邮箱" prop="email">
+        <el-form-item label="邮箱 "v-if="!isUpdate" >
           <el-input v-model="userForm.email" placeholder="请输入邮箱"/>
+        </el-form-item>
+        <el-form-item label="手机号" prop="mobile" v-if="isUpdate">
+          <el-input v-model="userForm.mobile" placeholder="请输入手机号"/>
+        </el-form-item>
+        <el-form-item label="邮箱" prop="email" v-if="isUpdate">
+          <el-input v-model="userForm.email" placeholder="请输入邮箱"/>
+        </el-form-item>
+        <el-form-item label="职位" prop="job">
+          <el-input v-model="userForm.job" placeholder="请输入职位"/>
+        </el-form-item>
+        <el-form-item label="城市" prop="city">
+          <el-input v-model="userForm.city" placeholder="请输入城市"/>
         </el-form-item>
         <el-form-item label="个性签名">
           <el-input v-model="userForm.signature" type="textarea" placeholder="请输入内容"/>
@@ -230,6 +254,7 @@
         <el-button @click="cancelRole">取 消</el-button>
       </div>
     </el-dialog>
+
     <el-dialog title="用户详情" :visible.sync="openDetail" width="500px" append-to-body @close="cancelDetail">
       <el-descriptions class="margin-top" :column="2" border>
         <el-descriptions-item :contentStyle="{'text-align': 'center'}">
@@ -286,7 +311,7 @@
           </template>
           {{ form.uid}}
         </el-descriptions-item>
-        <el-descriptions-item :span="2" :contentStyle="{'text-align': 'center'}" v-if="form.roleId ===3">
+        <el-descriptions-item :span="2" :contentStyle="{'text-align': 'center'}" >
           <template slot="label">
             学习时长
           </template>
@@ -317,15 +342,15 @@ import {
   delUser,
   assignRole,
   resetUserPassword,
-  registerUser
+  createUser,updateUser
 } from '@/api/system/user'
 import { mapGetters } from 'vuex'
 import userAvatar from '@/views/profile/userAvatar'
 import { getRoleOptions } from '@/api/system/role'
-
+import avatar from '@/components/Avatar'
 export default {
   name: 'User',
-  components: { userAvatar },
+  components: { userAvatar ,avatar},
   data() {
     const equalToPassword = (rule, value, callback) => {
       if (this.userForm.password !== value) {
@@ -436,6 +461,9 @@ export default {
         sex: [
           { required: true, message: '请选择性别', trigger: 'blur' }
         ],
+        roleId: [
+          { required: true, message: '用户角色不能为空', trigger: 'blur' }
+        ],
         mobile: [
           { required: true, message: '请输入手机号', trigger: 'blur' },
           {
@@ -444,11 +472,8 @@ export default {
             trigger: 'blur'
           }
         ],
-        nickname: [
-          { required: true, message: '请输入用户昵称', trigger: 'blur' }
-        ],
         signature: [
-          { type: 'string', max: 200, message: '用户个性签名不能超过100个字', trigger: 'blur' }
+          { type: 'string', max: 250, message: '用户个性签名不能超过250个字', trigger: 'blur' }
         ]
       }
     }
@@ -468,6 +493,9 @@ export default {
     ...mapGetters(['name'])
   },
   methods: {
+    updateAvatar(url){
+      this.userForm.avatar=url
+    },
     handleTeacherInfo(row) {
       this.$router.push({
         path: '/system/user/teacher',
@@ -585,7 +613,7 @@ export default {
         nickname: undefined,
         password: undefined,
         checkPassword: undefined,
-        sex: undefined,
+        sex: 'unknown',
         signature: '',
         mobile: undefined,
         email: undefined
@@ -623,6 +651,7 @@ export default {
       this.isUpdate=false
       this.passwordType=''
       this.title = '添加用户'
+      this.userForm.avatar='http://localhost/image/default.png'
     },
     handTopUpdate() {
       this.handleUpdate(this.role)
@@ -639,14 +668,25 @@ export default {
     submitForm: function() {
       this.$refs['userForm'].validate(valid => {
         if (valid) {
-          registerUser(this.userForm).then(res => {
-            this.$message({
-              message: res.msg,
-              type: 'success'
+          if (this.userForm.id)
+          {  updateUser(this.userForm).then(res => {
+              this.$message({
+                message: res.msg,
+                type: 'success'
+              })
+              this.cancelUser()
+              this.handleQuery()
             })
-            this.cancelUser()
-            this.handleQuery()
-          })
+        }else {
+            createUser(this.userForm).then(res => {
+              this.$message({
+                message: res.msg,
+                type: 'success'
+              })
+              this.cancelUser()
+              this.handleQuery()
+            })
+          }
         }
       })
     },
@@ -673,13 +713,10 @@ export default {
     /** 删除按钮操作 */
     handleResetPwd(row) {
       const userIds = row.id || this.ids
-      this.$prompt('请输入登录密码', '确认重置用户编号为"' + userIds + '"的密码?', {
+      this.$confirm('确认重置编号为"' + userIds + '"的用户密码?', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
-        inputType: 'password',
-        inputPattern: /^(?![A-Z]+$)(?![a-z]+$)(?!\d+$)(?![\W_]+$)\S{6,15}$/,
-        inputErrorMessage: '请输入包含数字、字母或特殊字符的6至15位以上密码'
-      }).then(({ value }) => {
+      type:'warning'}).then(({ value }) => {
         return resetUserPassword(userIds, value)
       }).then((res) => {
         this.getList()

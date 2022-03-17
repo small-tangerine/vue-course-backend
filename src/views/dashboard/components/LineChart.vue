@@ -60,7 +60,7 @@ export default {
       this.chart = this.$echarts.init(this.$el, 'macarons')
       this.setOptions(this.chartData)
     },
-    setOptions({ dayData, nowData,addTitle,totalTitle } = {}) {
+    setOptions({ dayData, totalData,addTitle,totalTitle } = {}) {
       this.chart.setOption({
         xAxis: {
           data: [this.$t('index.Mon'),this.$t('index.Tue'), this.$t('index.Wed'), this.$t('index.Thu'), this.$t('index.Fri'), this.$t('index.Sat'), this.$t('index.Sun')],
@@ -123,7 +123,7 @@ export default {
               }
             }
           },
-          data: nowData,
+          data: totalData,
           animationDuration: 2800,
           animationEasing: 'quadraticOut'
         }]

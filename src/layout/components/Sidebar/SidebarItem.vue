@@ -49,7 +49,7 @@ export default {
     basePath: {
       type: String,
       default: ''
-    }
+    },
   },
   data() {
     this.onlyOneChild = null
