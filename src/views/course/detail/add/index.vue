@@ -118,11 +118,11 @@
           </el-form-item>
           <el-form-item label="课程封面">
             <el-input type="hidden" v-model="courseForm.banner" style="position: absolute"/>
-            <image-upload @uploadImage="uploadImage" :type-id="1"/>
+            <image-upload :url="courseForm.banner" @uploadImage="uploadImage" :type-id="1"/>
           </el-form-item>
           <el-form-item label="课程详情背景">
             <el-input type="hidden" v-model="courseForm.bgImg" style="position: absolute"/>
-            <image-upload @uploadImage="uploadImage" :type-id="2"/>
+            <image-upload :url="courseForm.bgImg" @uploadImage="uploadImage" :type-id="2"/>
           </el-form-item>
         </el-col>
       </el-row>
@@ -157,6 +157,8 @@ export default {
         discountPrice: undefined,
         recommend: undefined,
         categoryIds: [],
+        bgImg:'http://localhost/image/20220307/5e1d991809c5318e40000800.png',
+        banner:'http://localhost/image/20220307/5d31765d08c90cba06000338-360-202.jpg'
       },
       categoryIds: [],
       recommendOptions: [{
