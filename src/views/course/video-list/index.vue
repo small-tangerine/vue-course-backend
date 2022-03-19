@@ -155,13 +155,13 @@
         <el-row :gutter="20" style="height: 160px!important;overflow: hidden">
           <el-col :span="12">
             <el-form-item label="视频标题" style="display: flex" prop="title">
-              <el-input v-model="form.title" type="textarea" placeholder="请输入视频标题"
+              <el-input :disabled="isAudit" v-model="form.title" type="textarea" placeholder="请输入视频标题"
                         :autosize="{ minRows:6, maxRows: 6}"/>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="视频封面" prop="thumbUrl">
-              <image-upload ref="bgImg" v-if="form.thumbUrl" @uploadImage="uploadImage" :type-id="2" :url="form.thumbUrl"/>
+            <el-form-item label="视频封面" prop="thumbUrl" >
+              <image-upload ref="bgImg" v-if="form.thumbUrl||isShow" @uploadImage="uploadImage" :type-id="2" :url="form.thumbUrl" :isAudit="isAudit"/>
             </el-form-item>
           </el-col>
         </el-row>
@@ -261,6 +261,7 @@ export default {
         keyword: undefined,
         auditStatus: undefined
       },
+      isShow:false,
       // 表单参数
       form: {
         title:undefined,
@@ -328,7 +329,13 @@ export default {
       this.isAudit=true
     },
     uploadImage(url){
-      this.form.thumbUrl=url
+      if (url)
+      {
+        this.form.thumbUrl=url
+      }else {
+        this.form.thumbUrl=url
+        this.isShow=true
+      }
     },
     playVideo(row) {
       this.openVideo = true
@@ -338,12 +345,12 @@ export default {
       this.open = false
       this.form={
         title:undefined,
-        thumbUrl:'http://loaclhost/image/default.png',
         url:undefined,
         auditStatus:undefined,
         auditNotice: undefined
       }
       this.isAudit=false
+      this.isShow=false
       this.$refs.form.resetFields()
     },
     cancelVideo() {
@@ -390,18 +397,21 @@ export default {
       this.form.courseId=this.id
       this.form.thumbUrl='http://localhost/image/default.png'
       this.title="添加课程视频"
+      this.isShow=false
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.open = true
      Object.assign( this.form ,row)
       this.title="修改课程视频"
+      this.isShow=false
     },
     /** 提交按钮 */
     submitForm: function () {
       this.$refs['form'].validate(valid => {
         if (valid) {
           if (this.isAudit){
+            this.isShow=false
             courseVideoAudit(this.form).then(res=>{
               if (res.error===0){
                 this.$message.success(res.msg)

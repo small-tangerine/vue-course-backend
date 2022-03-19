@@ -21,7 +21,7 @@
           <i class="el-icon-zoom-in"></i>
         </span>
         <span
-          v-if="!disabled"
+          v-if="disabled"
           class="el-upload-list__item-delete"
           @click="handleRemove()"
         >
@@ -30,7 +30,7 @@
       </span>
     </div>
   </el-upload>
-  <el-dialog :visible.sync="dialogVisible">
+  <el-dialog :visible.sync="dialogVisible" append-to-body>
     <img width="100%" :src="dialogImageUrl" alt="">
   </el-dialog>
   </div>
@@ -48,9 +48,12 @@ export default {
     },
     url:{
       type:String,
-      require:true,
-      default:'http://localhost/image/default.png'
+      require:true
     },
+    isAudit:{
+      type:Boolean,
+      default:false
+    }
   },
   data(){
     return{
@@ -108,6 +111,7 @@ export default {
       this.$refs.imgUpload.clearFiles()
       this.showUpload = false
       this.fileList=[]
+      this.$emit("uploadImage",undefined,this.typeId)
     },
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
@@ -115,6 +119,11 @@ export default {
     }
   },
   watch:{
+    isAudit: {
+      handler(value){
+      this.disabled=!value
+    },
+      immediate: true}
   }
 }
 </script>
