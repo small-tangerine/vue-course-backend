@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard-container">
-    <div class="dashboard-text">欢迎登录在线课程后台管理系统: {{ name }} 用户</div>
+    <div class="dashboard-text">欢迎登录在线学习平台管理系统: {{ name }} 用户</div>
   </div>
 </template>
 

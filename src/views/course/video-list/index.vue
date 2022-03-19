@@ -147,7 +147,7 @@
       @pagination="getList"
     />
     <el-dialog title="视频播放" :visible.sync="openVideo" width="700px" @close="cancelVideo">
-      <video-player :video="currentData"/>
+      <video-player v-if="openVideo" :video="currentData"/>
     </el-dialog>
 
     <el-dialog :title="title" :visible.sync="open" width="700px" @close="cancelOpen" :close-on-click-modal="false" append-to-body >

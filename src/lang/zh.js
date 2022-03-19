@@ -1,5 +1,5 @@
 export default {
-  title: '在线课程后台管理系统',
+  title: '在线学习平台管理系统',
   route: {
     dashboard: '首页',
     course: '课程管理',
@@ -21,7 +21,7 @@ export default {
     login: '登录日志',
     parameterConfig: '参数配置',
     questionBank: '题库管理',
-    platformLink: '在线课程',
+    platformLink: '在线学习平台',
     categoryList: '课程分类',
     file: '文件管理',
     teacher: '教师信息',
@@ -107,7 +107,7 @@ export default {
     profile: '个人中心',
     theme: '换肤',
     size: '布局大小',
-    logoTitle: '在线课程后台管理系统'
+    logoTitle: '在线学习平台管理系统'
   },
   login: {
     title: '基于vue2的后台管理系统模板',

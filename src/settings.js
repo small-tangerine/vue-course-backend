@@ -1,5 +1,5 @@
 module.exports = {
-  title: '在线课程后台管理系统',
+  title: '在线学习平台管理系统',
 
   /**
    * @type {boolean} true | false
