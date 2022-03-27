@@ -315,7 +315,7 @@
           <template slot="label">
             学习时长
           </template>
-          {{ form.learnHourTitle || '0 小时' }}
+          {{ form.learnHour | filterSecond}} 分钟
         </el-descriptions-item>
         <el-descriptions-item :span="2" :contentStyle="{'text-align': 'center'}">
           <template slot="label">
@@ -348,6 +348,7 @@ import { mapGetters } from 'vuex'
 import userAvatar from '@/views/profile/userAvatar'
 import { getRoleOptions } from '@/api/system/role'
 import avatar from '@/components/Avatar'
+import {normalSeconds} from "@/utils/utils";
 export default {
   name: 'User',
   components: { userAvatar ,avatar},
@@ -491,6 +492,11 @@ export default {
   computed: {
     ...mapGetters(['id']),
     ...mapGetters(['name'])
+  },
+  filters: {
+    filterSecond (val) {
+      return normalSeconds(val)
+    }
   },
   methods: {
     updateAvatar(url){
